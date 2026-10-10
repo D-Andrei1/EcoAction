@@ -1,0 +1,481 @@
+/* app.css - the look of every page (design tokens + components).
+PROVIDED COMPLETE - type it in exactly and do not change it. */
+:root {
+    --green: #1f7a4d;
+    --green-dark: #155c39;
+    --green-soft: #e3f2ea;
+    --ink: #1d2521;
+    --muted: #5b6660;
+    --line: #d5ddd8;
+    --surface: #ffffff;
+    --page: #f5f7f6;
+    --red: #b3261e;
+    --red-soft: #fbe9e7;
+    --amber: #8a5a00;
+    --amber-soft: #fff4dc;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --radius: 8px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--page);
+}
+
+a {
+    color: var(--green-dark);
+}
+
+h1 {
+    font-size: 1.75rem;
+    margin: 0 0 var(--space-5);
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin: 0 0 var(--space-3);
+}
+
+:focus-visible {
+    outline: 3px solid #f2b705;
+    outline-offset: 2px;
+}
+
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--surface);
+    padding: var(--space-2);
+}
+
+.skip-link:focus {
+    left: var(--space-2);
+    z-index: 10;
+}
+
+.topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+}
+
+.brand {
+    font-weight: 700;
+    color: var(--green);
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.topbar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.topbar nav a {
+    text-decoration: none;
+    padding: var(--space-1) 0;
+}
+
+.topbar nav a[aria-current="page"] {
+    font-weight: 700;
+    border-bottom: 3px solid var(--green);
+}
+
+.account {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--muted);
+}
+
+main {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-5);
+}
+
+main:focus {
+    outline: none;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    margin-bottom: var(--space-5);
+}
+
+.grid {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.btn {
+    display: inline-block;
+    font: inherit;
+    font-weight: 600;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--green);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--green-dark);
+}
+
+.btn-secondary {
+    background: var(--surface);
+    color: var(--green-dark);
+    border-color: var(--green);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+}
+
+.btn-danger {
+    background: var(--red);
+    color: #fff;
+}
+
+.btn[disabled] {
+    opacity: .6;
+    cursor: wait;
+}
+
+.field {
+    margin-bottom: var(--space-4);
+}
+
+.field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    max-width: 480px;
+    font: inherit;
+    padding: var(--space-2);
+    border: 1px solid #8a948f;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.field.check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.field.check input {
+    width: auto;
+}
+
+.field.check label {
+    font-weight: 400;
+    margin: 0;
+}
+
+.hint {
+    color: var(--muted);
+    margin: var(--space-1) 0 0;
+    font-size: .9rem;
+}
+
+.field-error {
+    color: var(--red);
+    margin: var(--space-1) 0 0;
+    font-weight: 600;
+}
+
+[aria-invalid="true"] {
+    border-color: var(--red) !important;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+}
+
+form.inline {
+    display: inline;
+}
+
+.toasts {
+    position: fixed;
+    right: var(--space-4);
+    top: var(--space-4);
+    z-index: 20;
+    display: grid;
+    gap: var(--space-2);
+    max-width: 360px;
+}
+
+.toast {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius);
+    background: var(--green-soft);
+    border: 1px solid var(--green);
+}
+
+.toast-error {
+    background: var(--red-soft);
+    border-color: var(--red);
+}
+
+.toast-info {
+    background: #eef3f8;
+    border-color: #5c7a99;
+}
+
+.toast-close {
+    background: none;
+    border: 0;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+main .toast {
+    position: static;
+    margin-bottom: var(--space-4);
+}
+
+.empty {
+    text-align: center;
+    padding: var(--space-6);
+    border: 2px dashed var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.empty-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 0 var(--space-2);
+}
+
+.skeleton span {
+    display: block;
+    height: 14px;
+    margin: var(--space-2) 0;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e6ebe8, #f3f6f4, #e6ebe8);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+    to {
+        background-position: -200% 0;
+    }
+}
+
+.kpi {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+}
+
+.kpi-label {
+    display: block;
+    color: var(--muted);
+}
+
+.kpi-value {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.kpi-note {
+    display: block;
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0 var(--space-2);
+    border-radius: 999px;
+    font-size: .85rem;
+    font-weight: 600;
+    background: #eceff0;
+}
+
+.badge-good {
+    background: var(--green-soft);
+    color: var(--green-dark);
+}
+
+.badge-warn {
+    background: var(--amber-soft);
+    color: var(--amber);
+}
+
+.badge-bad {
+    background: var(--red-soft);
+    color: var(--red);
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: var(--surface);
+}
+
+th,
+td {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+
+caption {
+    text-align: left;
+    font-weight: 700;
+    padding: var(--space-2) 0;
+}
+
+.pager {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+}
+
+.progress {
+    height: 16px;
+    background: #e6ebe8;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress>span {
+    display: block;
+    height: 100%;
+    background: var(--green);
+}
+
+.modal {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    max-width: 520px;
+    width: 90%;
+}
+
+.modal::backdrop {
+    background: rgba(0, 0, 0, .4);
+}
+
+.chart {
+    margin: 0 0 var(--space-3);
+}
+
+.chart svg {
+    width: 100%;
+    height: auto;
+}
+
+.chart figcaption {
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+.chart .gridline {
+    stroke: var(--line);
+}
+
+.chart .axis {
+    fill: var(--muted);
+    font-size: 12px;
+}
+
+.chart .line {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 2.5;
+}
+
+.chart .dot {
+    fill: var(--green);
+}
+
+.chart .bar {
+    fill: var(--green);
+}
+
+.chart-data {
+    margin-bottom: var(--space-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (max-width: 640px) {
+    main {
+        padding: var(--space-4);
+    }
+
+    .account {
+        margin-left: 0;
+    }
+}
