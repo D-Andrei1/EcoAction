@@ -73,7 +73,7 @@ class Browser:
         elif form is not None:
             body = urllib.parse.urlencode(form).encode("utf-8")
             headers["Content-Type"] = "application/x-www-form-urlencoded"
-            req = urllib.request.Request(self.base + path, data=body, headers=headers, method=method)
+        req = urllib.request.Request(self.base + path, data=body, headers=headers, method=method)
         try:
             with self.opener.open(req) as reply:
                 return Page(reply.status, reply.geturl(), reply.read())

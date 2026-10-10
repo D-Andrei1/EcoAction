@@ -15,7 +15,7 @@ import web
 PASSWORD_ITERATIONS = 600000 # tests lower this so they run quickly
 SESSION_DAYS = 14
 SESSION_COOKIE = "sid"
-CSRF_COOKIE = "crsf"
+CSRF_COOKIE = "csrf"
 
 # ---------- passwords (PBKDF2-SHA256, built into Python) ----------
 def hash_password(password):

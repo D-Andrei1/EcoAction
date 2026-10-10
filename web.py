@@ -38,7 +38,7 @@ def cookie_header(name, value, max_age=None):
 
     if max_age is not None:
         parts.append("Max-Age" + str(max_age))
-    return ("Set-Cookie", ": ".join(parts))
+    return ("Set-Cookie", "; ".join(parts))
 
 class Request:
     def __init__(self, environ):
