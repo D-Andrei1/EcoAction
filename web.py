@@ -25,7 +25,7 @@ def route(method, pattern):
     regex = re.compile("^" + re.sub(r"<(\w+)>", r"(?P<\1>[^/]+)", pattern) + "$")
 
     def register(handler):
-        ROUTES.append(method, regex, handler)
+        ROUTES.append((method, regex, handler))
         return handler
     return register
 
