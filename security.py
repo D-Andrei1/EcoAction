@@ -146,7 +146,7 @@ def admin_required(handler):
             return login_required(handler)(request, **kwargs)
         if not request.user['is_admin']:
             return web.error(request, 403)
-        return handler()
+        return handler(request, **kwargs)
     return guarded
 
 web.BEFORE_HOOKS.append(load_session)
