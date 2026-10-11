@@ -139,7 +139,7 @@ def login_required(handler):
         return handler(request, **kwargs)
     return guarded
 
-def admin_requried(handler):
+def admin_required(handler):
     @wraps(handler)
     def guarded(request, **kwargs):
         if request.user is None:

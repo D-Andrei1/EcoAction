@@ -31,7 +31,7 @@ def password_problem(password, email=""):
     if email and password.lower() == email.lower():
         return "Don't use your email address as your password."
     return ""
-
+ 
 
 def after_login(user, next_path=""):
     """Where to send someone once they are logged in. Onboarding comes first until it is done or skipped."""
@@ -64,18 +64,22 @@ def signup_page(request, email="", errors=None):
     errors = errors or {}
     fields = (ui.field("Email", "email", email, type="email", required=True,
                        error=errors.get("email", ""), attrs='autocomplete="email"')
+                       
               + ui.field("Password", "password", type="password", required=True,
                           error=errors.get("password", ""),
                           hint="At least 10 characters, with at least one letter and one number.",
                           attrs='autocomplete="new-password" minlength="10"')
+
               + ui.field("Confirm password", "confirm", type="password", required=True,
                          error=errors.get("confirm", ""), attrs='autocomplete="new-password"'))
+    
     message = ui.toast(errors["general"], "error") if errors.get("general") else ""
+
     body = ui.card("", message + ui.form(request, "/signup", fields, "Create account")
                    + '<p>Already have an account? <a href="/login">Log in</a></p>')
     return ui.layout(request, "Create your account", body)
 
-
+ 
 @route("GET", "/signup")
 def signup_form(request):
     if request.user:
