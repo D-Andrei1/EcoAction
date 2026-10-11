@@ -15,9 +15,20 @@ def styleguide(request):
                     + ui.button("Open dialog", "secondary", "button", 'data-open-modal="demo-modal"'))
     body += ui.card("Toast", ui.button("Show a toast", "secondary", "button",
                                        'onclick="showToast(\'Saved\', \'success\')"'))
-    
+
     # TO DO: add cards for ui.skeleton(3), ui.kpi(...), the four ui.badge(...) kinds,
     # and ui.field(...) with error="..." so the error style shows.
+
+    body += ui.skeleton(3)
+
+    body += ui.kpi("Key Performance Indicator", 10, "KPI description")
+
+    body += ui.badge("Neutral badge", "neutral")
+    body += ui.badge("Good badge", "good")
+    body += ui.badge("Warn badge", "warn")
+    body += ui.badge("Bad badge", "bad")
+
+    body += ui.field("Field", "field", error="Invalid input")
 
     return web.html(ui.layout(request, "Style guide", body))
 
