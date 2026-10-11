@@ -18,7 +18,7 @@ def styleguide(request):
     
     # TO DO: add cards for ui.skeleton(3), ui.kpi(...), the four ui.badge(...) kinds,
     # and ui.field(...) with error="..." so the error style shows.
-    
+
     return web.html(ui.layout(request, "Style guide", body))
 
 ui.add_nav("Style guide", "/styleguide", who="admin", order=95)
