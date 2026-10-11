@@ -22,3 +22,11 @@ class StyleguideTests(AppTestCase):
         self.assertEqual(page.status, 404)
         self.assertIn("find that page", page.text) # the ' in couldn't is sent as &#x27;
         self.assertIn("EcoAction Hub", page.text)
+
+    def test_field_is_linked_with_error_message(self):
+        b = self.browser()
+        b.signup()
+        page = b.get("/styleguide")
+        self.assertEqual(page.status,200)
+        self.assertIn('aria-describedby="f-field-error"', page.text)
+        self.assertIn('id="f-field-error"', page.text)
