@@ -19,16 +19,19 @@ def styleguide(request):
     # TO DO: add cards for ui.skeleton(3), ui.kpi(...), the four ui.badge(...) kinds,
     # and ui.field(...) with error="..." so the error style shows.
 
-    body += ui.skeleton(3)
+    body += ui.card("Skeleton",ui.skeleton(3))
 
-    body += ui.kpi("Key Performance Indicator", 10, "KPI description")
+    body += ui.card("Kpi",ui.kpi("Key Performance Indicator", 10, "KPI description"))
 
-    body += ui.badge("Neutral badge", "neutral")
-    body += ui.badge("Good badge", "good")
-    body += ui.badge("Warn badge", "warn")
-    body += ui.badge("Bad badge", "bad")
+    badges = (
+        ui.badge("Neutral badge", "neutral") + " " +
+        ui.badge("Good badge", "good") + " " +
+        ui.badge("Warn badge", "warn") + " " +
+        ui.badge("Bad badge", "bad")
+    )
+    body += ui.card("Badges", badges)
 
-    body += ui.field("Field", "field", error="Invalid input")
+    body += ui.card("Error field", ui.field("Field", "field", error="Invalid input"))
 
     return web.html(ui.layout(request, "Style guide", body))
 
