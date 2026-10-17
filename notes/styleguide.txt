@@ -1,0 +1,33 @@
+WHAT I BUILT - the tasks and addresses this file covers, and anything not finished yet
+DECISIONS - choices I made within the specification, and why
+PROBLEMS AND FIXES - what went wrong, how I found the cause, and how I fixed it
+TESTS - the tests I wrote and what each one proves
+CONNECTIONS - which other features this file uses or is used by, and anything found when integrating
+
+WHAT I BUILT -
+
+Added cards for ui.skeleton, ui.kpi, and the four types of badges (neutral, good, warn, bad),
+ui.field with a error.
+
+DECISIONS - 
+
+Used cards to follow the specification of the app and pattern in styleguide.py.
+Saved all four badges in their own variable before adding them to the body to follow 
+how it was done previously in styleguide.py 
+
+PROBLEMS AND FIXES -
+
+Didnt know the attributes for each elements that I needed to add, to fix this I checked
+ui.py to check what each element expects and how to make one.
+
+TESTS -
+
+Wrote a test to check if "f-field-error" exists in styleguide page, this checks if the 
+error message is applied to the field.
+
+CONNECTIONS -
+
+Using security.py to make the styleguide viewable by admins only.
+Using ui.py to make the actual page visible to the user and create cards.
+Using web.py to make a route to the styleguide (GET, "/styleguide") so users can get the 
+styleguide page.
