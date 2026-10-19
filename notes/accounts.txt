@@ -1,0 +1,7 @@
+Code review -
+
+The password is checked by security.verify_password() on line 157.
+
+dummy_hash() is used when the email is unknown so there isnt a difference 
+in the time it takes to respond for a know email or unknow email, if it took 
+different times it would reveal to attackers that the email know.

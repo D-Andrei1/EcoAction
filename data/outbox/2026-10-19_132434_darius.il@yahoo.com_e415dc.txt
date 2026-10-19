@@ -1,0 +1,8 @@
+To: darius.il@yahoo.com
+Subject: Reset your EcoAction Hub password
+
+Open this link to choose a new password:
+http://127.0.0.1:8000/reset/_JgTKUAWVThQj3z7LRfU-a67ku2BTuGVAjiCLKDV10Y
+
+It works once and stops working after 30 minutes.
+If you didn't ask for this, you can ignore this email.
