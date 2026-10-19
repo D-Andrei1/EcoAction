@@ -5,3 +5,19 @@ The password is checked by security.verify_password() on line 157.
 dummy_hash() is used when the email is unknown so there isnt a difference 
 in the time it takes to respond for a know email or unknow email, if it took 
 different times it would reveal to attackers that the email know.
+
+
+sign up -
+
+Sign up first checks if the user is rate limited to protect against people mass creating accounts.
+Next it gets the email and password from the form and performs checks to make sure the email format is 
+correct and the 2 passwords entered are the same, and if the email already exists if not it gives a signup error.
+After the account is created and inserted into the database then the first account to sign up is made a admin if not 
+its a user account.
+Then the users default preferences are set and users are redirected to the menu and a session is created.
+
+Sessions -
+
+Every time the user logs in a token is created and kept in the browser.
+When the user moves between pages the browser sends the cookie and the server
+verifies the session by the cookie with the cookies in the database.
