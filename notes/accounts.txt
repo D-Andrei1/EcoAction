@@ -21,3 +21,9 @@ Sessions -
 Every time the user logs in a token is created and kept in the browser.
 When the user moves between pages the browser sends the cookie and the server
 verifies the session by the cookie with the cookies in the database.
+
+Reset link -
+
+First the user enters their email and receives a email with a reset link if the email exists.
+The link is made by new_password_page where the token is used to make a unique link.
+Once the user can only open the link once and expires after 30 minutes.
