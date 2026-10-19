@@ -18,3 +18,26 @@ class Extra_AccountTests(AppTestCase):
         self.assertEqual(page.status,400)
         self.assertIn("expired or has already been used", page.text)
 
+    def test_sign_up_email_is_lowered(self):
+        actual_email = "Sam@Example.COM"
+        saved_email = "sam@example.com"
+
+        b = self.browser()
+        b.signup(actual_email)
+
+        b.login(saved_email)
+
+        page = b.get("/")
+        self.assertIn("Log out", page.text)
+
+    def test_wrong_password_rate_limit(self):
+        email = "sam@example.com"
+
+        b = self.browser()
+        b.signup(email)
+
+        page = None
+        for i in range(6):
+            page =  b.post("/login", {"email": email, "password": "NotThePassword"} )
+        
+        self.assertEqual(page.status,429)
