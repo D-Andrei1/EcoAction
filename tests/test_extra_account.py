@@ -39,5 +39,13 @@ class Extra_AccountTests(AppTestCase):
         page = None
         for i in range(6):
             page =  b.post("/login", {"email": email, "password": "NotThePassword"} )
-        
+
         self.assertEqual(page.status,429)
+
+        row = db.query_one(
+            "SELECT * FROM security_log "
+            "WHERE event = ? AND email = ?",
+            ("login_rate_limited", email)
+        )
+
+        self.assertIsNotNone(row)
