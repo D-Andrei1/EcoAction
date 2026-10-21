@@ -1,6 +1,6 @@
 import re
 import sqlite3
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, date
 
 import calendar
 import db
@@ -44,11 +44,19 @@ def onboarding_page(request,errors={}, status=200):
     return web.html(ui.layout(request, "Onboarding", body), status)
 
 def choose_onboarding_step(request, step, errors):
-    if step == 1:
-        return step_1_form(request, errors)
+    form = {
+        1 : step_1_form(request, errors),
+        2 : step_2_form(request, errors),
+        3 : step_3_form(request, errors)
+    }
 
-    if step == 2:
-        return step_2_form(request)
+    chosen_form = form[step]
+    print(chosen_form)
+
+    if chosen_form == None:
+        return ""
+    else:
+        return chosen_form
 
 #---------- STEP 1 ------------
 def step_1_form(request, errors):
@@ -61,6 +69,7 @@ def step_1_form(request, errors):
                        ))
 
     body = ui.card("", ui.form(request, "/onboarding/1", fields, "Choose your display name"))
+
     return body
 
 @route("POST", "/onboarding/1")
@@ -73,22 +82,26 @@ def step_1(request):
 
     display_name = form.get("display_name", "").strip()
 
-    if len(display_name) < MIN_LENGTH:
-        errors["display_name"] = "Your name must be atleast 2 characters."
+    if display_name != "":
+        if len(display_name) < MIN_LENGTH:
+            errors["display_name"] = "Your name must be atleast 2 characters."
 
-    if len(display_name) > MAX_LENGTH:
-        errors["display_name"] = "Your name cannot be over 40 characters."
+        if len(display_name) > MAX_LENGTH:
+            errors["display_name"] = "Your name cannot be over 40 characters."
+    else:
+        email = request.user["email"]
+        display_name = email.split("@")[0]
 
     if errors:
         return onboarding_page(request,errors,400)
 
     db.change("UPDATE users SET display_name = ?, onboarding_step = 1 WHERE id= ?",
               (display_name, request.user["id"]))
-    return onboarding_page(request)
+    return web.redirect("/onboarding")
 
 
 #---------- STEP 2 ------------
-def step_2_form(request):
+def step_2_form(request, errors):
     OPTIONS = ((" ", "Rather not say"),
                ("car","car"),
                ("bus","bus"),
@@ -110,17 +123,65 @@ def step_2(request):
     form = request.form
 
     habit = form.get("habit", "")
-    print(habit)
 
     services.preferences(request.user["id"])
 
-    db.change("UPDATE preferences SET baseline_habits = ? WHERE user_id = ?;set onboarding_step = 2",
-              habit, request.user["id"])
+    db.change("UPDATE preferences SET baseline_habits = ? WHERE user_id = ?",
+              (habit, request.user["id"]))
 
-    return onboarding_page(request)
+    db.change("UPDATE users SET onboarding_step = 2 WHERE id= ?",
+              (str(request.user["id"])))
+
+    return web.redirect("/onboarding")
 
 #---------- STEP 3 ------------
-def step_3_form(request, errors):
-    pass
+def step_3_form(request,errors):
+    errors = errors or {}
+
+    fields = (
+        ui.field("A first goal for this month",
+                "first_goal_kg", "20", 
+                required=True,
+                error = errors.get("first_goal", "")
+                )
+    )
+
+    body = ui.card("", ui.form(request, "/onboarding/3", fields, "Set your goal"))
+
+    return body
+
+@route("POST", "/onboarding/3")
+@security.login_required
+def step_3(request):
+    errors = {}
+    MIN_GOAL = 0
+    MAX_GOAL = 100000
+    today = date.today()
+    form = request.form
+
+    goal_kg = int(form.get("first_goal_kg", "").strip())
+
+    if goal_kg < MIN_GOAL:
+        errors["first_goal"] = "Your goal must be over 0kg"
+
+    if goal_kg > MAX_GOAL: 
+        errors["first_goal"] = "Your goal must be less than 10,000kg"
+
+    if errors:
+        return onboarding_page(request, errors, 400)
+
+    db.change("UPDATE goals set is_active = 0 WHERE id = ?",
+              (request.user["id"],))
+
+    db.execute("INSERT INTO goals (user_id, target_kg, start_date, end_date, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+               (request.user["id"], goal_kg, month_bounds(today)[0], month_bounds(today)[1], db.now(), db.now()))
+
+    db.change("UPDATE users set onboarding_step = 3, onboarding_done = 1 WHERE id = ?",
+              (request.user["id"],))
+
+    ui.flash(request, "You're all set. Log your first action to start tracking progress.")
+    return web.redirect(finish_path())
+
+
 
 ui.add_nav("Onboarding", "/onboarding", order=90)
