@@ -112,6 +112,11 @@ def step_2(request):
     habit = form.get("habit", "")
     print(habit)
 
+    services.preferences(request.user["id"])
+
+    db.change("UPDATE preferences SET baseline_habits = ? WHERE user_id = ?;set onboarding_step = 2",
+              habit, request.user["id"])
+
     return onboarding_page(request)
 
 #---------- STEP 3 ------------

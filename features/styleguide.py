@@ -34,5 +34,5 @@ def styleguide(request):
     body += ui.card("Error field", ui.field("Field", "field", error="Invalid input"))
 
     return web.html(ui.layout(request, "Style guide", body))
-
+    
 ui.add_nav("Style guide", "/styleguide", who="admin", order=95)
